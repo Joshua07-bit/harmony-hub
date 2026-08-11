@@ -29,7 +29,16 @@ export const Route = createFileRoute("/_authenticated/listings/new")({
   component: NewListing,
 });
 
-const AMENITIES = ["Wi-Fi", "Parking", "Meals", "Security", "Laundry", "Air conditioning", "Study desk", "Water"];
+const AMENITIES = [
+  "Wi-Fi",
+  "Parking",
+  "Meals",
+  "Security",
+  "Laundry",
+  "Air conditioning",
+  "Study desk",
+  "Water",
+];
 
 function NewListing() {
   const { session } = useAuth();
@@ -42,7 +51,7 @@ function NewListing() {
     description: "",
     address: "",
     city: "Lusaka",
-    price_monthly: 3500,
+    price_monthly: "3500",
     price_daily: "",
     room_type: "single",
   });
@@ -123,28 +132,53 @@ function NewListing() {
     <div className="min-h-screen bg-background">
       <SiteHeader />
       <div className="mx-auto max-w-2xl px-4 py-8 sm:px-6">
-        <button onClick={() => navigate({ to: "/dashboard" })} className="mb-4 inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground">
+        <button
+          onClick={() => navigate({ to: "/browse" })}
+          className="mb-4 inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground"
+        >
           <ArrowLeft className="h-4 w-4" /> Back to dashboard
         </button>
 
         <h1 className="font-display text-3xl font-bold">Add a listing</h1>
         <p className="mt-1 text-muted-foreground">Fill in the details — you can edit anytime.</p>
 
-        <form onSubmit={submit} className="mt-8 space-y-6 rounded-2xl border bg-card p-6 shadow-card">
+        <form
+          onSubmit={submit}
+          className="mt-8 space-y-6 rounded-2xl border bg-card p-6 shadow-card"
+        >
           <Field label="Title">
-            <Input required value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} placeholder="Cozy single room near university" />
+            <Input
+              required
+              value={form.title}
+              onChange={(e) => setForm({ ...form, title: e.target.value })}
+              placeholder="Cozy single room near university"
+            />
           </Field>
 
           <Field label="Description">
-            <Textarea required rows={4} value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} placeholder="Describe the space, house rules, neighborhood…" />
+            <Textarea
+              required
+              rows={4}
+              value={form.description}
+              onChange={(e) => setForm({ ...form, description: e.target.value })}
+              placeholder="Describe the space, house rules, neighborhood…"
+            />
           </Field>
 
           <div className="grid grid-cols-2 gap-4">
             <Field label="City">
-              <Input required value={form.city} onChange={(e) => setForm({ ...form, city: e.target.value })} placeholder="Lusaka, Kitwe, Ndola…" />
+              <Textarea
+                required
+                value={form.city}
+                onChange={(e) => setForm({ ...form, city: e.target.value })}
+                placeholder="Lusaka, Kitwe, Ndola…"/>
             </Field>
             <Field label="Address">
-              <Input required value={form.address} onChange={(e) => setForm({ ...form, address: e.target.value })} placeholder="Plot 12, Kabulonga Road" />
+              <Textarea 
+                required
+                value={form.address}
+                onChange={(e) => setForm({ ...form, address: e.target.value })}
+                placeholder="Plot 12, Kabulonga Road" />
             </Field>
           </div>
 
