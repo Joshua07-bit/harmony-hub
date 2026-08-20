@@ -1,4 +1,3 @@
-
 -- Role enum
 CREATE TYPE public.user_role AS ENUM ('tenant', 'landlord');
 
@@ -115,7 +114,6 @@ CREATE TRIGGER profiles_updated_at BEFORE UPDATE ON public.profiles FOR EACH ROW
 CREATE TRIGGER listings_updated_at BEFORE UPDATE ON public.listings FOR EACH ROW EXECUTE FUNCTION public.set_updated_at();
 CREATE TRIGGER bookings_updated_at BEFORE UPDATE ON public.bookings FOR EACH ROW EXECUTE FUNCTION public.set_updated_at();
 
--- Auto-create profile on signup
 CREATE OR REPLACE FUNCTION public.handle_new_user()
 RETURNS TRIGGER LANGUAGE plpgsql SECURITY DEFINER SET search_path = public AS $$
 BEGIN
@@ -132,3 +130,14 @@ END; $$;
 CREATE TRIGGER on_auth_user_created
 AFTER INSERT ON auth.users
 FOR EACH ROW EXECUTE FUNCTION public.handle_new_user();
+
+/* Supabase config was accidentally appended here; environment variables belong in .env.
+SUPABASE_URL=sb_publishable_283quytlqCMTVqUIZ6cPkw_1RIOz3XG
+SUPABASE_PUBLISHABLE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxxdXdhdGJsYmN1aW1lbnhuZ2FlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODcwNTk2NjMsImV4cCI6MjEwMjYzNTY2M30.I40jn0c-JlU6t784NBs74gQiKKCcY_vELMDcJaQ1x44
+
+VITE_SUPABASE_URL=https:sb_publishable_283quytlqCMTVqUIZ6cPkw_1RIOz3XG
+VITE_SUPABASE_PUBLISHABLE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxxdXdhdGJsYmN1aW1lbnhuZ2FlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODcwNTk2NjMsImV4cCI6MjEwMjYzNTY2M30.I40jn0c-JlU6t784NBs74gQiKKCcY_vELMDcJaQ1x44
+
+NEXT_PUBLIC_SUPABASE_URL=sb_publishable_283quytlqCMTVqUIZ6cPkw_1RIOz3XG
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxxdXdhdGJsYmN1aW1lbnhuZ2FlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODcwNTk2NjMsImV4cCI6MjEwMjYzNTY2M30.I40jn0c-JlU6t784NBs74gQiKKCcY_vELMDcJaQ1x44
+*/

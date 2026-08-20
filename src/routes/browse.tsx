@@ -53,7 +53,10 @@ function Browse() {
   const initial = Route.useSearch();
   const [city, setCity] = useState(initial.city ?? "");
   const [room, setRoom] = useState(initial.room ?? "any");
-  const [maxPrice, setMaxPrice] = useState<number>(initial.max ?? 8000);
+  const [maxPrice, setMaxPrice] = useState<number>(initial.max ?? 0);
+  const [cityInput, setCityInput] = useState(initial.city ?? "");
+  const [roomInput, setRoomInput] = useState(initial.room ?? "any");
+  const [priceInput, setPriceInput] = useState<string>((initial.max ?? 0).toString());
 
   const { data, isLoading } = useQuery({
     queryKey: ["listings"],
@@ -99,15 +102,15 @@ function Browse() {
                 <Input
                   className="pl-9"
                   placeholder="e.g. Lusaka, Kitwe, Ndola"
-                  value={city}
-                  onChange={(e) => setCity(e.target.value)}
+                  value={cityInput}
+                  onChange={(e) => setCityInput(e.target.value)}
                 />
               </div>
             </div>
 
             <div>
               <label className="mb-2 block text-sm font-medium">Room type</label>
-              <Select value={room} onValueChange={setRoom}>
+              <Select value={roomInput} onValueChange={setRoomInput}>
                 <SelectTrigger><SelectValue /></SelectTrigger>
                 <SelectContent>
                   <SelectItem value="any">Any</SelectItem>
@@ -119,20 +122,73 @@ function Browse() {
             </div>
 
             <div>
-              <div className="mb-2 flex items-center justify-between text-sm font-medium">
-                <span>Max monthly</span>
-                <span className="text-primary">K{maxPrice.toLocaleString()}</span>
+              <label htmlFor="max-monthly-price" className="mb-2 block text-sm font-medium">
+                Max monthly
+              </label>
+              <div className="relative">
+                <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-sm text-muted-foreground">
+                  K
+                </span>
+                <Input
+                  id="max-monthly-price"
+                  type="number"
+                  min={500}
+                  max={20000}
+                  step={250}
+                  value={priceInput}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    setPriceInput(value);
+
+                    if (value === "") {
+                      setMaxPrice(0);
+                      return;
+                    }
+
+                    const nextValue = Number(value);
+                    if (!Number.isNaN(nextValue)) {
+                      setMaxPrice(Math.min(20000, Math.max(500, nextValue)));
+                    }
+                  }}
+                  onBlur={() => {
+                    if (priceInput === "") {
+                      setPriceInput("0");
+                      setMaxPrice(0);
+                    }
+                  }}
+                  className="h-10 w-full rounded-lg border pl-7 pr-3 shadow-none focus-visible:ring-2 focus-visible:ring-ring"
+                  placeholder="Enter max price"
+                  aria-label="Maximum monthly price"
+                />
               </div>
-              <Slider
-                value={[maxPrice]}
-                onValueChange={([v]) => setMaxPrice(v)}
-                min={500}
-                max={20000}
-                step={250}
-              />
             </div>
 
-            <Button variant="outline" className="w-full" onClick={() => { setCity(""); setRoom("any"); setMaxPrice(20000); }}>
+            <Button
+              type="button"
+              className="w-full gap-2"
+              onClick={() => {
+                setCity(cityInput);
+                setRoom(roomInput);
+                setMaxPrice(Number(priceInput) || 0);
+              }}
+            >
+              <Search className="h-4 w-4" />
+              Search
+            </Button>
+
+            <Button
+              type="button"
+              variant="outline"
+              className="w-full"
+              onClick={() => {
+                setCity("");
+                setRoom("any");
+                setMaxPrice(0);
+                setCityInput("");
+                setRoomInput("any");
+                setPriceInput("0");
+              }}
+            >
               Reset filters
             </Button>
           </aside>

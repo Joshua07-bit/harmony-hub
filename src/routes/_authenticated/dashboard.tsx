@@ -12,12 +12,22 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import React from "react";
 
+export const Route = createFileRoute("/_authenticated/dashboard")({
+  head: () => ({
+    meta: [
+      { title: "Dashboard · Nestly" },
+      { name: "description", content: "Manage your bookings, listings, and account from your Nestly dashboard." },
+    ],
+  }),
+  component: DashboardPage,
+});
+
 interface DashboardProps {
   userId: string;
   isAdmin?: boolean;
 }
 
-const Dashboard: React.FC<DashboardProps> = ({ userId, isAdmin }) => {
+const DashboardPage: React.FC<DashboardProps> = ({ userId, isAdmin }) => {
   const { profile, session } = useAuth();
   const isLandlord = profile?.role === "landlord";
 
@@ -36,13 +46,20 @@ const Dashboard: React.FC<DashboardProps> = ({ userId, isAdmin }) => {
                 : "Your trips and booking requests."}
             </p>
           </div>
-          {isLandlord && (
-            <Button asChild size="lg" className="gap-2">
-              <Link to="/listings/new">
-                <Plus className="h-4 w-4" /> Add listing
+          <div className="flex flex-wrap gap-3">
+            <Button asChild size="lg" variant="outline" className="gap-2">
+              <Link to="/browse">
+                <Home className="h-4 w-4" /> Browse listings
               </Link>
             </Button>
-          )}
+            {isLandlord && (
+              <Button asChild size="lg" className="gap-2">
+                <Link to="/listings/new">
+                  <Plus className="h-4 w-4" /> Add listing
+                </Link>
+              </Button>
+            )}
+          </div>
         </div>
 
         {isLandlord ? (
@@ -349,5 +366,3 @@ function EmptyState({ title, body, cta }: { title: string; body: string; cta?: R
     </div>
   );
 }
-
-export default Dashboard;

@@ -171,29 +171,47 @@ function NewListing() {
                 required
                 value={form.city}
                 onChange={(e) => setForm({ ...form, city: e.target.value })}
-                placeholder="Lusaka, Kitwe, Ndola…"/>
+                placeholder="Lusaka, Kitwe, Ndola…"
+              />
             </Field>
             <Field label="Address">
-              <Textarea 
+              <Textarea
                 required
                 value={form.address}
                 onChange={(e) => setForm({ ...form, address: e.target.value })}
-                placeholder="Plot 12, Kabulonga Road" />
+                placeholder="Plot 12, Kabulonga Road"
+              />
             </Field>
           </div>
 
           <div className="grid grid-cols-2 gap-4">
             <Field label="Monthly price (K)">
-              <Input required type="number" min={1} value={form.price_monthly} onChange={(e) => setForm({ ...form, price_monthly: e.target.value as any })} />
+              <Input
+                required
+                type="number"
+                min={1}
+                value={form.price_monthly}
+                onChange={(e) => setForm({ ...form, price_monthly: e.target.value as any })}
+              />
             </Field>
             <Field label="Daily price (K, optional)">
-              <Input type="number" min={0} value={form.price_daily} onChange={(e) => setForm({ ...form, price_daily: e.target.value })} />
+              <Input
+                type="number"
+                min={0}
+                value={form.price_daily}
+                onChange={(e) => setForm({ ...form, price_daily: e.target.value })}
+              />
             </Field>
           </div>
 
           <Field label="Room type">
-            <Select value={form.room_type} onValueChange={(v) => setForm({ ...form, room_type: v })}>
-              <SelectTrigger><SelectValue /></SelectTrigger>
+            <Select
+              value={form.room_type}
+              onValueChange={(v) => setForm({ ...form, room_type: v })}
+            >
+              <SelectTrigger>
+                <SelectValue />
+              </SelectTrigger>
               <SelectContent>
                 <SelectItem value="single">Single room</SelectItem>
                 <SelectItem value="shared">Shared room</SelectItem>
@@ -209,7 +227,7 @@ function NewListing() {
                   <Checkbox
                     checked={amenities.includes(a)}
                     onCheckedChange={(c) =>
-                      setAmenities((prev) => c ? [...prev, a] : prev.filter((x) => x !== a))
+                      setAmenities((prev) => (c ? [...prev, a] : prev.filter((x) => x !== a)))
                     }
                   />
                   {a}
@@ -229,8 +247,15 @@ function NewListing() {
             />
             <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
               {images.map((img) => (
-                <div key={img.path} className="group relative aspect-square overflow-hidden rounded-lg border bg-muted">
-                  <img src={img.url} alt="Listing photo preview" className="h-full w-full object-cover" />
+                <div
+                  key={img.path}
+                  className="group relative aspect-square overflow-hidden rounded-lg border bg-muted"
+                >
+                  <img
+                    src={img.url}
+                    alt="Listing photo preview"
+                    className="h-full w-full object-cover"
+                  />
                   <button
                     type="button"
                     onClick={() => removeImage(img.path)}
@@ -247,12 +272,17 @@ function NewListing() {
                 disabled={uploading}
                 className="flex aspect-square flex-col items-center justify-center gap-2 rounded-lg border-2 border-dashed text-sm text-muted-foreground transition-colors hover:border-primary hover:text-primary disabled:opacity-60"
               >
-                {uploading ? <Loader2 className="h-5 w-5 animate-spin" /> : <ImagePlus className="h-5 w-5" />}
+                {uploading ? (
+                  <Loader2 className="h-5 w-5 animate-spin" />
+                ) : (
+                  <ImagePlus className="h-5 w-5" />
+                )}
                 {uploading ? "Uploading…" : "Add photos"}
               </button>
             </div>
             <p className="mt-1 text-xs text-muted-foreground">
-              Upload multiple images (JPG, PNG, up to 10MB each). The first photo will be used as the cover.
+              Upload multiple images (JPG, PNG, up to 10MB each). The first photo will be used as
+              the cover.
             </p>
           </Field>
 
