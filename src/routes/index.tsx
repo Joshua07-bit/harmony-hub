@@ -66,7 +66,7 @@ function Landing() {
                 e.preventDefault();
                 navigate({ to: "/browse", search: { city } as never });
               }}
-              className="mt-8 flex w-full max-w-xl flex-col gap-2 rounded-2xl bg-background p-2 shadow-elevated sm:flex-row"
+              className="mt-6 flex w-full max-w-xl flex-col gap-2 rounded-4xl bg-background p-2 shadow-elevated sm:flex-row"
             >
               <div className="flex flex-1 items-center gap-2 px-3">
                 <MapPin className="h-4 w-4 shrink-0 text-muted-foreground" />
@@ -74,7 +74,7 @@ function Landing() {
                   value={city}
                   onChange={(e) => setCity(e.target.value)}
                   placeholder="Search a city or area (e.g. Lusaka, Kitwe)"
-                  className="border-0 shadow-none focus-visible:ring-0"
+                  className="h-12 border-0 bg-white text-foreground shadow-none placeholder:text-muted-foreground focus-visible:ring-0"
                 />
               </div>
               <Button type="submit" size="lg" className="gap-2">
@@ -107,7 +107,7 @@ function Landing() {
           ].map(({ icon: Icon, title, body }) => (
             <div
               key={title}
-              className="rounded-2xl border bg-card p-6 shadow-card transition-shadow hover:shadow-elevated"
+              className="rounded-4xl border bg-card p-6 shadow-card transition-shadow hover:shadow-elevated"
             >
               <div className="grid h-11 w-11 place-items-center rounded-xl bg-primary/10 text-primary">
                 <Icon className="h-5 w-5" />
@@ -121,7 +121,7 @@ function Landing() {
 
       {/* Landlord CTA */}
       <section className="mx-auto max-w-7xl px-4 pb-24 sm:px-6">
-        <div className="overflow-hidden rounded-3xl bg-gradient-hero p-10 text-primary-foreground shadow-elevated sm:p-14">
+        <div className="overflow-hidden rounded-4xl bg-gradient-hero p-10 text-primary-foreground shadow-elevated sm:p-14">
           <div className="grid gap-8 md:grid-cols-2 md:items-center">
             <div>
               <h2 className="font-display text-3xl font-bold sm:text-4xl">Own a boarding house?</h2>

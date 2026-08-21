@@ -26,20 +26,13 @@ export function SiteHeader() {
         </Link>
 
         <nav className="hidden items-center gap-6 md:flex">
-          <Link
-            to="/browse"
-            className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-            activeProps={{ className: "text-foreground" }}
-          >
-            Browse
-          </Link>
-          {session && (
+          {!session && (
             <Link
-              to="/dashboard"
+              to="/browse"
               className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
               activeProps={{ className: "text-foreground" }}
             >
-              Dashboard
+              Browse
             </Link>
           )}
         </nav>
